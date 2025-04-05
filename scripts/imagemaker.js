@@ -75,13 +75,9 @@ function calculateHeight(tracker) {
         ++tracker[sparkTargetType + 'Count'];
     }
 
-    var newCount = tracker.newCount;
-    var moonCount = tracker.moonCount;
-    var summonCount = tracker.summonCount;
-
-    var newSsrRows = getRows(newCount);
-    var moonSsrRows = getRows(moonCount);
-    var summonSsrRows = getRows(summonCount);
+    var newSsrRows = getRows(tracker.newCount);
+    var moonSsrRows = getRows(tracker.moonCount);
+    var summonSsrRows = getRows(tracker.summonCount);
 
     var maxRowsHeight = Math.max(newSsrRows.height, moonSsrRows.height, summonSsrRows.height);
     var maxRowCount = Math.max(newSsrRows.count, moonSsrRows.count, summonSsrRows.count);
@@ -108,7 +104,7 @@ function getColumnSize(count) {
 
 function getRows(count) {
     var columnSize = getColumnSize(count);
-    var rowHeight = ssrHeight * getSsrRatio(count);
+    var rowHeight = ssrHeight * getSsrSizeRatio(count);
     var rows = Math.ceil(count / columnSize);
 
     return {
@@ -117,7 +113,7 @@ function getRows(count) {
     };
 }
 
-function getSsrRatio(count) {
+function getSsrSizeRatio(count) {
     return getSsrWidth(count)/ssrWidth;
 }
 
@@ -168,7 +164,7 @@ function getSsrImg(id, isSparkTarget, totalCount) {
         spark.classList.add('sparkTarget');
         spark.src = "https://mizagbf.github.io/GBFAL/assets/spark/spark.png";
         spark.alt = "spark"
-        spark.width = sparkWidth * getSsrRatio(totalCount);
+        spark.width = sparkWidth * getSsrSizeRatio(totalCount);
         addLoadedImage(spark);
         div.appendChild(spark);
     }
