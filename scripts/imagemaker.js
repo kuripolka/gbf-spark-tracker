@@ -185,7 +185,6 @@ function appendSsrImages(table, tracker) {
     var addedSummonCount = 0;
 
     tracker.spark.forEach(ssr => {
-        console.log(tracker.weaponList[ssr.id]);
         var isSparkTarget = ssr.isSparkTarget;
         if (ssr.type == 'new') {
             newDiv.appendChild(getSsrImg(tracker.weaponList[ssr.id], isSparkTarget, tracker.newCount));
