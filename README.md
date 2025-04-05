@@ -5,7 +5,7 @@ This is a Chromium plugin for Granblue Fantasy that keeps track of what SSRs you
 A spark image can be generated at any time, as long as an SSR has been rolled. The image will open in a new tab.
 
 Sample spark image:
-![Sample spark image](./images/sample.png)
+![Sample spark image](./images/sample.png?)
 
 # Installation
 1. Download this repository as a ZIP file and extract it
