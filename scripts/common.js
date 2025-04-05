@@ -1,21 +1,6 @@
-export async function refreshData() {
-    return await fetch("https://raw.githubusercontent.com/MizaGBF/GBFAL/refs/heads/main/json/data.json")
-        .then(raw => raw.json())
-        .then(json => {
-            var characters = json["lookup"];
-            var ssrs = Object.keys(characters)
-                .filter(id => id.match(/^304\d+/))
-                .map(id => ({[id]: characters[id]}));
-
-            chrome.storage.local.set({
-                weaponList: json["premium"],
-                characterList: ssrs
-            })
-        });
-}
-
 export async function resetData() {
     return chrome.storage.local.set({
+        weaponList: [],
         spark: [],
         sparkTarget: "",
         lastRoll: [],
@@ -31,6 +16,10 @@ function getSparkData(file) {
     fetch(`../test-data/${file}.json`)
         .then(raw => raw.json())
         .then(json => {
+            var newCount = 0;
+            var moonCount = 0;
+            var summonCount = 0;
+
             json.forEach(ssr => {
                 if (ssr.id.match(/^204/)) {
                     summonCount++;
@@ -42,8 +31,9 @@ function getSparkData(file) {
             })
 
             chrome.storage.local.set({
+                weaponList: {},
                 spark: json,
-                sparkTarget: { id: "3040585000", type: "new" },
+                sparkTarget: { id: "1040714000", type: "new" },
                 lastRoll: [],
                 newWeapons: [],
                 newCount: newCount,

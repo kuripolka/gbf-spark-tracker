@@ -16,4 +16,6 @@ Sample spark image:
 # Usage
 This plugin automatically tracks rolls.
 
-Press Reset Spark to wipe data. Press Generate Spark Image to generate an image.
+Press Reset Spark to wipe data.
+
+Press Generate Spark Image to generate an image.
