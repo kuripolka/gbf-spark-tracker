@@ -4,13 +4,13 @@
     "manifest_version": 3,
     "action": {
         "default_popup": "html/popup.html",
-        "default_icon": "images/new.png"
+        "default_icon": "images/crystal.png"
     },
     "icons": {
-        "16": "images/new.png",
-        "32": "images/new.png",
-        "48": "images/new.png",
-        "128": "images/new.png"
+        "16": "images/crystal.png",
+        "32": "images/crystal.png",
+        "48": "images/crystal.png",
+        "128": "images/crystal.png"
     },
     "permissions": [
         "storage",
@@ -24,9 +24,7 @@
         {
             "js": ["scripts/tracker.js"],
             "matches": [
-                "https://game.granbluefantasy.jp/*",
-                "https://game.granbluefantasy.jp/#gacha",
-                "https://game.granbluefantasy.jp/#gacha/*"
+                "https://game.granbluefantasy.jp/*"
             ]
         }
     ]

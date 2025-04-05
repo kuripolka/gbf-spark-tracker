@@ -83,14 +83,16 @@ function updateTracker(tracker, ssr) {
 
 function updateWeaponList() {
     var sparkTargets = document.querySelectorAll('.lis-item-open');
-    for (var sparkTarget of sparkTargets) {
-        var weapon = getWeaponDetails(sparkTarget);
-        weaponList[weapon.id] = weapon.charaId;
-    };
-
-    chrome.storage.local.set({
-        weaponList: weaponList
-    });
+    chrome.storage.local.get("weaponList", tracker => {
+        sparkTargets.forEach(sparkTarget => {
+            var weapon = getWeaponDetails(sparkTarget);
+            if (!tracker.weaponList[weapon.id]) {
+                tracker.weaponList[weapon.id] = weapon.charaId;
+            }
+        });
+    
+        chrome.storage.local.set(tracker);
+    })
 }
 
 function getWeaponDetails(weaponDiv) {

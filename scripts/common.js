@@ -1,6 +1,6 @@
 export async function resetData() {
     return chrome.storage.local.set({
-        weaponList: [],
+        weaponList: {},
         spark: [],
         sparkTarget: "",
         lastRoll: [],
