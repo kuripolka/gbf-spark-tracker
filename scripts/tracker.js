@@ -15,12 +15,11 @@ chrome.runtime.onMessage.addListener(() => {
 
             if (isSparkSelect) {
                 // pick spark target
-                console.log("in spark select screen!");
                 document.querySelectorAll('.btn-exchange, .prt-exchange-ng')
                     .forEach(button => button.addEventListener('click', e => updateSparkTarget(e)));
-        
-                // update spark for new weapons not in data.json yet
-                updateNewWeapons();
+
+                // fetch gacha details + update spark for new weapons not in data.json yet
+                updateWeaponList();
             }
         }
     }, 500)
@@ -69,12 +68,12 @@ function updateTracker(tracker, ssr) {
         type = "summon";
         tracker.summonCount += 1;
     } else {
-        if (tracker.weaponList[ssrId]) {
-            ssrId = tracker.weaponList[ssrId]
-        } else if (tracker.newWeapons.indexOf(ssrId) == -1) {
-            // ssr list source is not automatically updated upon gbf update, need to keep track of new ssrs
-            tracker.newWeapons.push(ssrId);
-        }
+        // if (!tracker.weaponList[ssrId]) {
+        //     ssrId = tracker.weaponList[ssrId]
+        // } else if (tracker.newWeapons.indexOf(ssrId) == -1) {
+        //     // ssr list source is not automatically updated upon gbf update, need to keep track of new ssrs
+        //     tracker.newWeapons.push(ssrId);
+        // }
         
         if (ssr.children.length == 1 || ssr.children[1].classList.value != "ico-new") {
             type = "moon"
@@ -91,37 +90,35 @@ function updateTracker(tracker, ssr) {
     })
 }
 
-// replaces new weapon ids with character ids
-function updateNewWeapons() {
-    chrome.storage.local.get(["newWeapons", "spark"], tracker => {
-        tracker.newWeapons.forEach(newWeaponId => {
-            var newWeaponDiv = document.querySelector('div[data-item-id="' + newWeaponId + '"]');
-            if (newWeaponDiv) {
-                var newCharaId = getCharaDetails(newWeaponDiv).id;
-                tracker.spark.filter(ssr => ssr.id == newWeaponId)
-                    .forEach(ssr => ssr.id = newCharaId);
+function updateWeaponList() {
+    var sparkTargets = document.querySelectorAll('.lis-item-open');
+    for (var sparkTarget of sparkTargets) {
+        var weapon = getWeaponDetails(sparkTarget);
+        weaponList[weapon.id] = weapon.charaId;
+    };
 
-                chrome.storage.local.set(tracker);
-            }
-        })
+    chrome.storage.local.set({
+        weaponList: weaponList
     });
 }
 
-function getCharaDetails(weaponDiv) {
+function getWeaponDetails(weaponDiv) {
     while (weaponDiv.classList[0] != "lis-item-open") {
         weaponDiv = weaponDiv.parentElement;
     }
 
+    var weaponId = document.querySelector('.lis-item-open').children[1].attributes['data-item-id'].value;
     var newCharaImg = weaponDiv.children[3].children[0].src
     var regex = /\/assets\/npc\/s\/(.*)_01\.jpg/;
     return {
-        id: regex.exec(newCharaImg)[1],
+        id: weaponId,
+        charaId: regex.exec(newCharaImg)[1],
         type: weaponDiv.classList.length == 3 ? "moon" : "new"
     };
 }
 
 function updateSparkTarget(event) {
     chrome.storage.local.set({
-        sparkTarget: getCharaDetails(event.target)
+        sparkTarget: getWeaponDetails(event.target)
     });
 }

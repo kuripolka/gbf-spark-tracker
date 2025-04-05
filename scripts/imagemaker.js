@@ -14,22 +14,33 @@ var borderRadii = 20;
 var loadedImages = [];
 
 export function create(tracker) {
-    var ssrCount = tracker.newCount + tracker.moonCount + tracker.summonCount;
-    if (tracker.sparkTarget) {
-        tracker.spark.push({...tracker.sparkTarget, isSparkTarget: true});
-    }
+    getAllWeapons(tracker, () => {
+        var ssrCount = tracker.newCount + tracker.moonCount + tracker.summonCount;
+        if (tracker.sparkTarget) {
+            tracker.spark.push({...tracker.sparkTarget, isSparkTarget: true});
+        }
 
-    var table = createSparkTable();
-    tableHeight = calculateHeight(tracker);
+        var table = createSparkTable();
+        tableHeight = calculateHeight(tracker);
 
-    appendSsrImages(table, tracker);
-    applyCss(table);
+        appendSsrImages(table, tracker);
+        applyCss(table);
 
-    var parentDiv = document.createElement('div');
-    parentDiv.appendChild(table);
-    parentDiv.appendChild(createBackground(ssrCount));  // border + ssr rate
+        var parentDiv = document.createElement('div');
+        parentDiv.appendChild(table);
+        parentDiv.appendChild(createBackground(ssrCount));  // border + ssr rate
 
-    displaySpark(parentDiv);
+        displaySpark(parentDiv);
+    });
+}
+
+function getAllWeapons(tracker, callback) {
+    fetch("https://raw.githubusercontent.com/MizaGBF/GBFAL/refs/heads/main/json/data.json")
+        .then(raw => raw.json())
+        .then(json => {
+            Object.assign(tracker.weaponList, json["premium"]);
+            callback();
+        });
 }
 
 function createSparkTable() {
@@ -137,8 +148,7 @@ function addLoadedImage(img) {
     }));
 }
 
-function getImg(ssr, isSparkTarget, totalCount) {
-    var id = ssr.id;
+function getSsrImg(id, isSparkTarget, totalCount) {
     var characterUrl = `https://prd-game-a4-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/npc/m/${id}_01.jpg`;
     var summonUrl = `https://prd-game-a2-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/summon/m/${id}.jpg`;
 
@@ -175,15 +185,16 @@ function appendSsrImages(table, tracker) {
     var addedSummonCount = 0;
 
     tracker.spark.forEach(ssr => {
+        console.log(tracker.weaponList[ssr.id]);
         var isSparkTarget = ssr.isSparkTarget;
         if (ssr.type == 'new') {
-            newDiv.appendChild(getImg(ssr, isSparkTarget, tracker.newCount));
+            newDiv.appendChild(getSsrImg(tracker.weaponList[ssr.id], isSparkTarget, tracker.newCount));
             newDiv = processFullRow(table, newDiv, ssr.type, ++addedNewCount, tracker.newCount);
         } else if (ssr.type == 'moon') {
-            moonDiv.appendChild(getImg(ssr, isSparkTarget, tracker.moonCount));
+            moonDiv.appendChild(getSsrImg(tracker.weaponList[ssr.id], isSparkTarget, tracker.moonCount));
             moonDiv = processFullRow(table, moonDiv, ssr.type, ++addedMoonCount, tracker.moonCount);
         } else {
-            summonDiv.appendChild(getImg(ssr, isSparkTarget, tracker.summonCount));
+            summonDiv.appendChild(getSsrImg(ssr.id, isSparkTarget, tracker.summonCount));
             summonDiv = processFullRow(table, summonDiv, ssr.type, ++addedSummonCount, tracker.summonCount);
         }
     });
