@@ -19,3 +19,9 @@ This plugin automatically tracks rolls.
 Press Reset Spark to wipe roll history.
 
 Press Generate Spark Image to generate an image.
+
+# To Do List
+- Confirm support for choosing a summon as a spark target
+- Bronze+Silver Moon count
+- Cage count
+- Multiple sparks in a row
