@@ -67,21 +67,12 @@ function updateTracker(tracker, ssr) {
     if (ssrId.match(/^2\d+/)) {
         type = "summon";
         tracker.summonCount += 1;
+    } else if (ssr.children.length == 1 || ssr.children[1].classList.value != "ico-new") {
+        type = "moon"
+        tracker.moonCount += 1;
     } else {
-        // if (!tracker.weaponList[ssrId]) {
-        //     ssrId = tracker.weaponList[ssrId]
-        // } else if (tracker.newWeapons.indexOf(ssrId) == -1) {
-        //     // ssr list source is not automatically updated upon gbf update, need to keep track of new ssrs
-        //     tracker.newWeapons.push(ssrId);
-        // }
-        
-        if (ssr.children.length == 1 || ssr.children[1].classList.value != "ico-new") {
-            type = "moon"
-            tracker.moonCount += 1;
-        } else {
-            type = "new"
-            tracker.newCount += 1;
-        }
+        type = "new"
+        tracker.newCount += 1;
     }
 
     tracker.spark.push({
@@ -107,7 +98,7 @@ function getWeaponDetails(weaponDiv) {
         weaponDiv = weaponDiv.parentElement;
     }
 
-    var weaponId = document.querySelector('.lis-item-open').children[1].attributes['data-item-id'].value;
+    var weaponId = weaponDiv.children[1].attributes['data-item-id'].value;
     var newCharaImg = weaponDiv.children[3].children[0].src
     var regex = /\/assets\/npc\/s\/(.*)_01\.jpg/;
     return {
