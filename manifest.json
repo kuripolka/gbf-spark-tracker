@@ -6,6 +6,12 @@
         "default_popup": "html/popup.html",
         "default_icon": "images/new.png"
     },
+    "icons": {
+        "16": "images/new.png",
+        "32": "images/new.png",
+        "48": "images/new.png",
+        "128": "images/new.png"
+    },
     "permissions": [
         "storage",
         "tabs"
