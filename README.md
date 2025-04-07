@@ -21,6 +21,7 @@ Press Reset Spark to wipe roll history.
 Press Generate Spark Image to generate an image.
 
 # To Do List
+- Add loader when popup is fetching spark data or generating an image
 - Confirm support for choosing a summon as a spark target
 - Bronze+Silver Moon count
 - Cage count

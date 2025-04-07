@@ -1,15 +1,74 @@
+<style>
+    button {
+        margin: 3px;
+        font-size: 10px;
+        width: 186px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding: 7px;
+        background-color: #fff;
+        border: 2px solid #9fe2ff;
+        color: #5cc4e0;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #ebfaff;
+    }
+
+    .container {
+        text-align: center;
+    }
+
+    .header-icons img {
+        display: inline-block;
+        width: 45px;
+        margin: 7px 9px;
+        opacity: .7;
+    }
+
+    .count {
+        width: 200px;
+        margin: 7px auto 5px;
+    }
+
+    .count span {
+        border: 2px solid #e3f8ff;
+        background-color: #fff;
+        width: 45px;
+        height: 35px;
+        margin: 0px 7px 5px;
+        display: inline-block;
+        color: #5cc4e0;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        line-height: 35px;
+    }
+</style>
+
 <html>
-    <body>
-        <div style="width: 210px">
-            <div>
-                <img src="https://mizagbf.github.io/GBFAL/assets/spark/gem.jpg" width="40px" style="vertical-align: middle;"/>: <span id="newCount"></span>&nbsp;&nbsp;&nbsp;&nbsp;
-                <img src="https://mizagbf.github.io/GBFAL/assets/spark/moon.jpg" width="40px" style="vertical-align: middle;"/>: <span id="moonCount"></span>&nbsp;&nbsp;&nbsp;&nbsp;
-                <img src="https://mizagbf.github.io/GBFAL/assets/spark/sunstone.jpg" width="40px" style="vertical-align: middle;"/>: <span id="summonCount"></span>
+<body>
+    <div style="width: 210px; text-align: center;">
+        <div class="container">
+            <div class="header-icons">
+                <img src="https://mizagbf.github.io/GBFAL/assets/spark/gem.jpg"
+                    style="vertical-align: middle;" />
+                <img src="https://mizagbf.github.io/GBFAL/assets/spark/moon.jpg"
+                    style="vertical-align: middle;" />
+                <img src="https://mizagbf.github.io/GBFAL/assets/spark/sunstone.jpg"
+                    style="vertical-align: middle;" />
             </div>
-            <button id="reset">Reset Spark</button>
-            <br/>
-            <button id="send">Create Spark Image</button>
+            <div class="count">
+                <span id="newCount">15</span>
+                <span id="moonCount">10</span>
+                <span id="summonCount">6</span>
+            </div>
         </div>
-    </body>
-    <script type="module" src="../scripts/popup.js"></script>
+        <button id="reset">Reset Spark<span class="button_spots"></span></button>
+        <br />
+        <button id="send">Create Spark Image</button>
+    </div>
+</body>
+<script type="module" src="../scripts/popup.js"></script>
+
 </html>
